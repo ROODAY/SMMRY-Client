@@ -1,0 +1,105 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+}
+
+.App h1 {
+  font-size: 4rem;
+}
+
+.App form {
+  flex-grow: 1;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+p.smmry {
+  text-align: left;
+  white-space: pre-wrap;
+  border: 2px solid grey;
+  padding: 15px;
+}
+
+div.deets {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+p.lines input {
+  font-size: 16px;
+  width: 20px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+p.lines input::-webkit-outer-spin-button,
+p.lines input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+p.lines input[type=number] {
+  -moz-appearance: textfield;
+}
+
+textarea.text {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+button.smmrz {
+  width: fit-content;
+}
+
+/* Buttons styles */
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+border: 0;
+padding: 0;
+}
+
+input[type="submit"].btn,
+button.btn {
+cursor: pointer;
+}
+
+.btn {
+display: inline-block;
+outline: none;
+*zoom: 1;
+text-align: center;
+text-decoration: none;
+font-family: inherit;
+letter-spacing: 1px;
+vertical-align: middle;
+border: 1px solid;
+transition: all 0.2s ease;
+box-sizing: border-box;
+text-shadow: 0 1px 0 rgba(0,0,0,0.01);
+}
+
+.btn-medium {
+padding: 0.5375em 1.375em;
+}
+
+.btn-blue {
+color: #4682B4;
+border-color: #4682B4;
+}
+.btn-blue:hover {
+  background: #4682B4;
+  color: #fff;
+  border-color: #4682B4;
+}
