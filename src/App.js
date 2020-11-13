@@ -23,6 +23,13 @@ const App = () => {
       .catch(console.error);
   };
 
+  const resetForm = () => {
+    setText("");
+    setLines(7);
+    setSmmry(null);
+    setLoading(false);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -42,7 +49,7 @@ const App = () => {
             <button
               className="reset btn btn-blue btn-medium"
               type="button"
-              onClick={() => setSmmry(null)}
+              onClick={resetForm}
             >
               New SMMRY
             </button>
