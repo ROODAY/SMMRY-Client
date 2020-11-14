@@ -1,0 +1,54 @@
+.AuthPanel {
+  top: 0;
+  background-color: #282c34;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid grey;
+  padding: 15px;
+  align-self: flex-end;
+  transition: margin-top 1s ease;
+  position: absolute;
+  margin-top: 0;
+}
+
+.AuthPanel a {
+  color: white;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-info div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user-info img {
+  width: 64px;
+  height: 64px;
+}
+
+.toggle-hidden {
+  cursor: pointer;
+  position: absolute;
+  font-size: 32px;
+  bottom: -36px;
+  right: 5px;
+}
+
+.apikey-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.apikey-wrapper > * {
+  margin: 10px;
+}

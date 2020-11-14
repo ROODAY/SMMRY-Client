@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const favicon = require("serve-favicon");
@@ -12,20 +11,28 @@ app.use(express.static(path.join(__dirname, "build")));
 app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
 
 app.post("/smmry", (req, res) => {
-  axios
-    .post(
-      `https://api.smmry.com/&SM_API_KEY=${process.env.SMMRY_KEY}&SM_LENGTH=${req.body.lines}`,
-      qs.stringify({
-        sm_api_input: req.body.text,
-      }),
-      {
-        headers: {
-          Expect: "100-continue",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    )
-    .then((smmry) => res.json(smmry.data));
+  if (req.body.url) {
+    axios
+      .get(
+        `https://api.smmry.com/&SM_API_KEY=${req.body.apiKey}&SM_LENGTH=${req.body.lines}&SM_WITH_BREAK&SM_URL=${req.body.url}`
+      )
+      .then((smmry) => res.json(smmry.data));
+  } else {
+    axios
+      .post(
+        `https://api.smmry.com/&SM_API_KEY=${req.body.apiKey}&SM_LENGTH=${req.body.lines}&SM_WITH_BREAK`,
+        qs.stringify({
+          sm_api_input: req.body.text,
+        }),
+        {
+          headers: {
+            Expect: "100-continue",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((smmry) => res.json(smmry.data));
+  }
 });
 
 app.get("/", (req, res) => {

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 .App {
   text-align: center;
   background-color: #282c34;
@@ -10,8 +12,15 @@
   color: white;
 }
 
-.App h1 {
+header h1 {
   font-size: 4rem;
+}
+
+header h1::after {
+  content: "client";
+  font-size: 1rem;
+  vertical-align: top;
+  position: absolute;
 }
 
 .App form {
@@ -21,6 +30,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 50px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 p.smmry {
@@ -37,9 +47,25 @@ div.deets {
   width: 100%;
 }
 
-p.lines input {
+p.lines input, input.url {
   font-size: 16px;
   width: 20px;
+  text-align: center;
+  background-color: #282c34;
+  color: white;
+  border: 2px solid grey;
+  font-family: 'Open Sans', sans-serif;
+}
+
+input.url {
+  font-size: 16px;
+  width: 100%;
+  background-color: #282c34;
+  color: white;
+  margin-bottom: 30px;
+  border: 2px solid grey;
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -56,7 +82,16 @@ p.lines input[type=number] {
 
 textarea.text {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  background-color: #282c34;
+  color: white;
+  border: 2px solid grey;
+}
+
+textarea.text::placeholder, input::placeholder {
+  font-family: 'Open Sans', sans-serif;
+  color: #ddd;
+  line-height: 20px;
 }
 
 button.smmrz {
@@ -77,6 +112,7 @@ cursor: pointer;
 
 .btn {
 display: inline-block;
+background: transparent;
 outline: none;
 *zoom: 1;
 text-align: center;
@@ -90,6 +126,10 @@ box-sizing: border-box;
 text-shadow: 0 1px 0 rgba(0,0,0,0.01);
 }
 
+.btn-small {
+font-size: 0.8125em;
+padding: 0.4125em 1.25em;
+}
 .btn-medium {
 padding: 0.5375em 1.375em;
 }
@@ -98,8 +138,18 @@ padding: 0.5375em 1.375em;
 color: #4682B4;
 border-color: #4682B4;
 }
+.btn-blue:disabled:hover {
+  background: transparent;
+  color: #4682B4;
+  border-color: #4682B4;
+  cursor: default;
+}
 .btn-blue:hover {
   background: #4682B4;
   color: #fff;
   border-color: #4682B4;
+}
+
+button.smmrz.sending {
+  cursor: wait !important;
 }
