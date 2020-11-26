@@ -16,7 +16,8 @@ app.post("/smmry", (req, res) => {
       .get(
         `https://api.smmry.com/&SM_API_KEY=${req.body.apiKey}&SM_LENGTH=${req.body.lines}&SM_WITH_BREAK&SM_URL=${req.body.url}`
       )
-      .then((smmry) => res.json(smmry.data));
+      .then(({ data }) => res.json(data))
+      .catch((err) => res.status(500).json(err));
   } else {
     axios
       .post(
@@ -31,7 +32,19 @@ app.post("/smmry", (req, res) => {
           },
         }
       )
-      .then((smmry) => res.json(smmry.data));
+      .then(({ data }) => res.json(data))
+      .catch((err) => res.status(500).json(err));
+  }
+});
+
+app.post("/getPage", (req, res) => {
+  if (req.body.url) {
+    axios
+      .get(req.body.url)
+      .then(({ data }) => res.json(data))
+      .catch((err) => res.status(500).json(err));
+  } else {
+    res.status(400).send("You must provide a URL parameter!");
   }
 });
 
