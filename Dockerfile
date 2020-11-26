@@ -1,5 +1,5 @@
 # set node image with version
-FROM node:12.16.1
+FROM node:12.16.1-alpine
 EXPOSE 8080
 
 # create directory
