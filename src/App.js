@@ -1,10 +1,14 @@
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import Modal from "react-modal";
+import swal from "@sweetalert/with-react";
+
 import AuthPanel from "./AuthPanel";
 import { withFirebase } from "./Firebase";
 import { AuthUserContext } from "./Session";
-import swal from "@sweetalert/with-react";
 import "./App.css";
+
+Modal.setAppElement("#root");
 
 const App = ({ firebase }) => {
   const [text, setText] = useState("");
@@ -12,8 +16,15 @@ const App = ({ firebase }) => {
   const [lines, setLines] = useState(10);
   const [smmry, setSmmry] = useState(null);
   const [sending, setSending] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   const authUser = useContext(AuthUserContext);
+
+  const closeModal = () => {
+    setShowModal(false);
+    setModalContent(null);
+  };
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -103,6 +114,14 @@ const App = ({ firebase }) => {
     return true;
   };
 
+  const readText = () => {
+    const cleanText = smmry.sm_api_content
+      .replace(/(\[BREAK\] )/g, "\n\n")
+      .replace(/(\[BREAK\])/g, "");
+    const speech = new SpeechSynthesisUtterance(cleanText);
+    window.speechSynthesis.speak(speech);
+  };
+
   return (
     <div className="App">
       <AuthPanel />
@@ -121,6 +140,18 @@ const App = ({ firebase }) => {
             <div className="deets">
               <span>Reduced by {smmry.sm_api_content_reduced}</span>
               <span>{smmry.sm_api_character_count} characters</span>
+            </div>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}
+            >
+              <span className="clickable" onClick={readText}>
+                Read for me
+              </span>
             </div>
             <button
               className="reset btn btn-blue btn-medium"
@@ -169,7 +200,117 @@ const App = ({ firebase }) => {
             </button>
           </>
         )}
+        <div style={{ marginTop: 20 }}>
+          <span
+            className="clickable"
+            style={{ margin: 10 }}
+            onClick={() => {
+              const curURL =
+                window.location.protocol +
+                "//" +
+                window.location.host +
+                window.location.pathname;
+              /* eslint-disable jsx-a11y/anchor-is-valid, no-script-url, no-template-curly-in-string */
+              const href =
+                "javascript:(function() {const url = location.protocol + '//' + location.host + location.pathname;window.location.href = `" +
+                curURL +
+                "?url=${url}`})();";
+              const bookmarkletAnchor = `
+                <a href="${href}">
+                      One-click Summary
+                    </a>
+              `;
+              setModalContent(
+                <>
+                  <h2>Bookmarklet</h2>
+                  <p>
+                    For one-click summarization, drag this link to your bookmark
+                    bar:{" "}
+                    <span
+                      dangerouslySetInnerHTML={{ __html: bookmarkletAnchor }}
+                    />
+                    <br />
+                    <br />
+                    Alternatively copy and paste this code into a bookmark URL:
+                  </p>
+                  <pre style={{ whiteSpace: "pre-wrap" }}>
+                    {"javascript:(function() {const url = location.protocol + '//' + location.host + location.pathname;window.location.href = `" +
+                      curURL +
+                      "?url=${url}`})();"}
+                  </pre>
+                  <h2>How to Use</h2>
+                  <p>
+                    When you find an article you want to summarize, have it
+                    present in the focused tab/window, then just click the
+                    bookmark once and the article link or text will be loaded
+                    here. Then just select the number of lines you want and hit
+                    SMMRZ!
+                  </p>
+                  <button onClick={closeModal}>Close</button>
+                </>
+              );
+              /* eslint-enable jsx-a11y/anchor-is-valid, no-script-url, no-template-curly-in-string */
+              setShowModal(true);
+            }}
+          >
+            Bookmarklet
+          </span>
+          |
+          <span
+            className="clickable"
+            style={{ margin: 10 }}
+            onClick={() => {
+              setModalContent(
+                <>
+                  <h2>Privacy Policy</h2>
+                  <p>
+                    In order for this SMMRY client to work, you must login with
+                    a Google account and save your SMMRY API key. The API key
+                    gets stored under your account UID in Firebase, and can only
+                    be read/modified by you or through the Firebase Admin
+                    Console (only accessible by me). Yes, you have to trust that
+                    I won't steal your SMMRY key, and you'll just have to take
+                    my word for it. If that's not good enough, well this is{" "}
+                    <a
+                      href="https://github.com/ROODAY/SMMRY-Client"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      open source
+                    </a>{" "}
+                    so you can host it yourself.
+                  </p>
+                  <button onClick={closeModal}>Close</button>
+                </>
+              );
+              setShowModal(true);
+            }}
+          >
+            Privacy
+          </span>
+        </div>
       </form>
+      <Modal
+        isOpen={showModal}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          content: {
+            position: "relative",
+            maxWidth: "500px",
+            height: "fit-content",
+            inset: 0,
+            margin: 10,
+          },
+        }}
+      >
+        {modalContent}
+      </Modal>
     </div>
   );
 };

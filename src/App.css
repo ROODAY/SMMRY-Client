@@ -33,6 +33,15 @@ header h1::after {
   font-family: 'Open Sans', sans-serif;
 }
 
+span.clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+span.clickable:hover {
+  color: #4682B4;
+}
+
 p.smmry {
   text-align: left;
   white-space: pre-wrap;
@@ -152,4 +161,18 @@ border-color: #4682B4;
 
 button.smmrz.sending {
   cursor: wait !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .App form {
+    width: 90%;
+  }
+}
+
+@media only screen
+  and (min-width: 769px) 
+  and (max-width: 1200px) {
+  .App form {
+    width: 70%;
+  }
 }
