@@ -30,26 +30,7 @@ const App = ({ firebase }) => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const url = urlParams.get("url");
-    if (url) {
-      const urlObj = new URL(url);
-      if (urlObj.host === "www.wired.com") {
-        axios.post("/getPage", { url }).then(({ data }) => {
-          const el = document.createElement("html");
-          el.innerHTML = data;
-          const text1 = Array.from(el.querySelectorAll(".article__body>p"))
-            .map((t) => t.textContent)
-            .join("\n");
-          const text2 = Array.from(el.querySelectorAll("article.content>p"))
-            .map((t) => t.textContent)
-            .join("\n");
-
-          setText(text1 || text2);
-          el.remove();
-        });
-      } else {
-        setUrl(url);
-      }
-    }
+    if (url) setUrl(url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
